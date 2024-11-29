@@ -1,0 +1,42 @@
+[build-system]
+requires = ["hatchling>=1.9.0",]
+build-backend = "hatchling.build"
+
+[project]
+name = "SIMPyON"
+dynamic = [
+    "version",
+]
+description = "SIMION simulations with Python"
+readme = "README.rst"
+requires-python = ">=3.7"
+
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Other Environment",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Scientific/Engineering :: Human Machine Interfaces",
+    "Topic :: Scientific/Engineering :: Visualization",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Software Development :: User Interfaces",
+]
+dependencies = [
+    "numpy",
+    "scipy",
+    "setuptools>=60",
+    "toml",
+]
+[tool.hatch.version]
+path = "src/SIMPyON/resources/VERSION"
+[tool.hatch.build.targets.sdist]
+include = [
+    "/src",
+]
