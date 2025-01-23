@@ -3,7 +3,7 @@ import os
 class Filenames:
     """ Class for keeping track of filenames and directories """
 
-    def __init__(self, project_folder_path: str, rec_filename: str, fly_filename: str, output_filename: str, iob_filename: str):
+    def __init__(self, project_folder_path: str, rec_filename: str, fly_filename: str, output_filename: str, iob_filename: str, gem_file: str):
         """Initializes the necessary directories and filenames for running SIMION simultions
         
         Parameters
@@ -30,9 +30,11 @@ class Filenames:
             self.fly_filename = os.path.join(project_folder_path,fly_filename)
         if output_filename:
             self.output_filename = os.path.join(project_folder_path,output_filename)
+        if gem_file:
+            self.gem_file = os.path.join(project_folder_path,gem_file)
         if iob_filename:
             self.iob_filename  = os.path.join(project_folder_path,iob_filename)       
-            self.pa_file = os.path.join(project_folder_path,os.path.splitext(iob_filename)[0] + '.pa#')                                         
+            self.pa_file = os.path.join(project_folder_path,os.path.splitext(iob_filename)[0] + '.pa#')          
 
     def __str__(self):
         return str([f'project_folder_path = {self.project_folder_path}', 
@@ -44,3 +46,5 @@ class Filenames:
 
 
 
+    def get_filenames(self,):
+        return [self.rec_filename,self.fly_filename,self.output_filename,self.iob_filename,self.pa_file,self.gem_file]

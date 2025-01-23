@@ -1,5 +1,5 @@
 [build-system]
-requires = ["hatchling>=1.9.0",]
+requires = ["hatchling",]
 build-backend = "hatchling.build"
 
 [project]
@@ -31,7 +31,9 @@ classifiers = [
 dependencies = [
     "numpy",
     "scipy",
-    "setuptools>=60",
+    "matplotlib",
+    "pandas",
+    "setuptools",
     "toml",
 ]
 [tool.hatch.version]

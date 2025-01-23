@@ -14,3 +14,7 @@ def list_indent(string_list:list, n_ident:int):
 def list_newline(string_list:list, end_of_string:bool=True ):
     return [str_newline(s,end_of_string) for s in string_list]
 
+
+def numpy_string(array):
+    # convert numpy array in array of string
+    return list(map(str,array))
