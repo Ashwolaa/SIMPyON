@@ -264,8 +264,6 @@ def write_particle(filename, particles_data, fly_type="sequence"):
             direction = particle_date.get("direction", [0, 0, 0])
             position = particle_date.get("position", [0, 0, 0])
             if fly_type == "sequence":
-                position_initial = position["initial"]
-                position_final = position["final"]
                 n = position["n"]
             else:
                 n = particle_date.get("n", 1)
@@ -275,7 +273,7 @@ def write_particle(filename, particles_data, fly_type="sequence"):
                 file.write("  standard_beam {\n")
                 file.write("    tob = 0,\n")
                 if fly_type == "mass":
-                    file.write(f'{make_arithmetic_sequence(mass)}\n')
+                    file.write(f'{make_arithmetic_sequence(mass,'mass')}\n')
                 else:
                     file.write(f"    mass = {mass},\n")
                 file.write(f"    charge = {charge},\n")
@@ -295,12 +293,17 @@ def write_particle(filename, particles_data, fly_type="sequence"):
         file.write("}\n")
 
 
-def make_arithmetic_sequence(mass):
-    strings_in = f"    mass = arithmetic_sequence \u007b\n"
+def 
+
+def make_value(dic,label):
+    return f"    {label} = {dic['value']}\n"
+
+def make_arithmetic_sequence(dic,label):
+    strings_in = f"    {label} = arithmetic_sequence \u007b\n"
     strings = []
-    strings.append(f'first = {mass['first']},')
-    strings.append(f'last = {mass['last']},')
-    strings.append(f'n = {mass['n']},')
+    strings.append(f'first = {dic['first']},')
+    strings.append(f'last = {dic['last']},')
+    strings.append(f'n = {dic['n']},')
     strings.append("\u007d,")
     return strings_in + "\n".join(s_utils.list_indent(strings, 3))
 
@@ -336,6 +339,18 @@ def make_dir_cylinder(direction):
     strings.append(f'fill = {str(direction['fill']).lower()},')
     strings.append("\u007d,")
     return strings_in + "\n".join(s_utils.list_indent(strings, 3))
+
+
+def make_direction(direction,direction_type='single'):
+
+    if direction_type=='single':
+        string_out = f"    direction = {vector_str(direction)},\n"
+    elif direction_type=='cylinder':
+        string_out = make_dir_cylinder(direction)
+    elif direction_type=='angle':
+        string_out = make_value(direction['azimuthal'],'az')
+        string_out += make_arithmetic_sequence(direction['elevation'],'el')
+
 
 
 def update_fly_file(flying_particles, D, fly_filename, step=10, factor=0.9, fly_type="sequence", **kwargs):

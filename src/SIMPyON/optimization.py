@@ -37,18 +37,6 @@ def cost_detector_hit(hitPos, det_pos):
     return np.sum((hitPos - det_pos[0]) ** 2)
 
 
-def cost_func(cost, cost_scale):
-    """
-    Scale the computed cost by a scaling factor.
-    Args:
-        cost: The raw cost value.
-        cost_scale: Scaling factor to weight the cost.
-    Returns:
-        Scaled cost.
-    """
-    return cost * cost_scale
-
-
 def cost_spatial_spread(Vys, Ys):
     """
     Calculate the cost based on spatial spread.
@@ -80,6 +68,17 @@ def cost_time_spread(ToF, X_start):
         cost += np.sum((ToF[mask] - np.mean(ToF[mask])) ** 2)
     return cost
 
+
+def cost_func(cost, cost_scale):
+    """
+    Scale the computed cost by a scaling factor.
+    Args:
+        cost: The raw cost value.
+        cost_scale: Scaling factor to weight the cost.
+    Returns:
+        Scaled cost.
+    """
+    return cost * cost_scale
 
 # ================================== Optimization Class ==================================
 
@@ -164,7 +163,7 @@ class Optimization:
             # ========== Spatial spread ==========
             cost += cost_func(
                 cost_spatial_spread(
-                    self.R.get_Y_velocity(start), self.R.get_Y_position(splash)
+                    self.R.get_radial_velocity(start), self.R.get_radial_position(splash)
                 ),
                 cost_scale=1 * detector.weight,
             )

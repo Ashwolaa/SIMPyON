@@ -1,9 +1,9 @@
 import SIMPyON.utils.strings as s_utils
 from SIMPyON.electrodes import (
     Element,
+    makeElement,
     makePolyLine,
     makeElectrode,
-    makeElement,
     makeParabola,
 )
 import os

@@ -30,6 +30,7 @@ SIMPyON
 
 SIMPyON, SIMION with Python, is a python library to build SIMION geometries and optimize voltages. It was developed during the design development of a PhotoIon-PhotoElectron coincidence spectrometer.
 It can be decomposed into:
+
 * a set of commands to easily build a geometry file from scratch which can then be converted into a PA file for SIMION.
 * a launcher for SIMION simulations with an optimization class to find the optimal voltages according to the desired ouput.
 

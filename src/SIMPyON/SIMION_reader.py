@@ -167,8 +167,13 @@ class SIMION_reader:
             # Slicing to choose between starting/splash/crossing
             start = df[::2].reset_index()  # Starting conditions
             splash = df[1::2].reset_index()  # Detector splash
-
             return start, splash
+
+    @staticmethod
+    def get_position(df):
+        return np.sqrt(
+            np.array(df["X"]) ** 2 + np.array(df["Y"]) ** 2 + np.array(df["Z"]) ** 2
+        )
 
     @staticmethod
     def get_radial_position(df):
@@ -189,6 +194,12 @@ class SIMION_reader:
     @staticmethod
     def get_X_position(df):
         return np.array(df["X"])
+
+    @staticmethod
+    def get_velocity(df):
+        return np.sqrt(
+            np.array(df["Vx"]) ** 2 + np.array(df["Vy"]) ** 2 + np.array(df["Vz"]) ** 2
+        )
 
     @staticmethod
     def get_radial_velocity(df):
@@ -218,32 +229,6 @@ class SIMION_reader:
             * eV_from_SIMION
         )
 
-    def extractFlightData(self, output_file=None):
-        start, splash = self.loadFlighData(output_file)
-        ####### STARTING CONDITIONS ##########
-        # X is the ToF axis here
-        pos_R = np.sqrt(np.array(start["Y"]) ** 2 + np.array(start["Z"]) ** 2)
-        pos_X = np.array(start["X"])
-        vel_R = np.sqrt(np.array(start["Vy"]) ** 2 + np.array(start["Vz"]) ** 2)
-        vel_X = np.array(start["Vx"])
-
-        ####### END CONDITIONS ##########
-        detec_time = np.array(splash["TOF"])  # Time of arrival
-        detec_radius = np.sqrt(np.array(splash["Y"]) ** 2 + np.array(splash["Z"]) ** 2)
-        start_cond = {
-            "pos_R": pos_R,
-            "pos_X": pos_X,
-            "vel_R": vel_R,
-            "vel_X": vel_X,
-            "mass": np.array(start["Mass"]),
-        }  # Dictionary syntax
-        end_cond = {
-            "ToF": detec_time,
-            "R": detec_radius,
-            "X": np.array(splash["X"]),
-        }
-        return start_cond, end_cond
-
     def plot_2D_ion_image(self, output_file, bins=256, cmap="viridis"):
         """Plots a 2D ion image"""
         df_ic, df_fc = self.load_flight_data(output_file.oput_filename)
@@ -256,7 +241,6 @@ class SIMION_reader:
         plt.ylabel("$y$ (mm)")
         plt.tight_layout()
         return img
-
 
 
 def main():

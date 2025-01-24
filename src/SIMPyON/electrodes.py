@@ -3,6 +3,29 @@ import re
 from SIMPyON.utils.strings import numpy_string
 
 
+def makeElement(string):
+    A = string.replace("\t", "").split("\n")  # Remove indent and split newlines
+    origin = A[0]
+    array = extract_numbers(origin)
+    locate = np.array(array[:2])
+    scale = array[3]
+    index = array[4]
+    element, parameters = extract_word_and_numbers(A[8])
+    if element == "box2D":
+        width = np.array([parameters[0], parameters[2]])
+        radius = np.array([parameters[1], parameters[3]])
+        return CylindricalElement(index, width, radius, locate, scale)
+    elif element == "polyline":
+        edges = tuple(parameters)
+        return PolyLineElement(index, edges, locate, scale)
+    else:
+        return None
+
+
+def makeElements(string_list):
+    return [makeElement(string) for string in string_list]
+
+
 def extract_numbers(strings):
     # Utilisation de l'expression régulière pour trouver tous les nombres
     numbers = re.findall(r"-?\d+", strings)
@@ -20,6 +43,7 @@ def extract_word_and_numbers(strings):
         return keyword, numbers
     else:
         return None, None
+
 
 
 # Base class for geometric elements
