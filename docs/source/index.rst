@@ -1,17 +1,11 @@
-.. SIMPyOn documentation master file, created by
-   sphinx-quickstart on Sat Jan 25 22:21:37 2025.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+SIMPyOn
+=======
 
-SIMPyOn documentation
-=====================
+SIMPyOn is a free and open-source software to efficiently setup SIMION simulations
+It simplifies the interaction with SIMION by providing Python API to generate the relevant files required by the program. It provides:
 
-Add your content using ``reStructuredText`` syntax. See the
-`reStructuredText <https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html>`_
-documentation for details.
-
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+* a set of classes that can be used to make gem files, pa files, fly files
+* a set of command to launch simion fly, refine potential arrays, fast-adjust voltages
+* an optimization routine to efficiently find the best voltages
+* a dedicated class to load and plot the data resulting from SIMION simulations
 
